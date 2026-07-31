@@ -1,0 +1,169 @@
+-- ============================================================================
+-- Encuesta Ciudadana 2027 — Riobamba y Chimborazo
+-- Script combinado de las 6 migraciones (supabase/migrations/0001..0006).
+-- Pega TODO este archivo en el SQL Editor de Supabase y dale "Run" una sola vez.
+-- ============================================================================
+
+-- 0001_init_extensions.sql
+create extension if not exists "pgcrypto";
+
+-- 0002_create_candidates.sql
+create table public.candidates (
+  id uuid primary key default gen_random_uuid(),
+  name text not null,
+  dignity text not null check (dignity in ('alcaldia_riobamba', 'prefectura_chimborazo')),
+  is_active boolean not null default true,
+  display_order integer not null default 0,
+  created_at timestamptz not null default now()
+);
+
+comment on table public.candidates is 'Candidatos precargados para las preguntas de recordación asistida. Actualizar cuando el CNE oficialice las candidaturas.';
+
+-- 0003_create_surveys_responses.sql
+create table public.surveys_responses (
+  id uuid primary key default gen_random_uuid(),
+  created_at timestamptz not null default now(),
+
+  -- Demografía
+  parroquia text not null check (
+    parroquia in (
+      'Lizarzaburu','Maldonado','Velasco','Veloz','Yaruquíes',
+      'Cacha','Calpi','Cubijíes','Flores','Licán','Licto',
+      'Pungalá','Punín','Quimiag','San Juan','San Luis'
+    )
+  ),
+  edad text not null check (edad in ('16-20','21-35','36-50','51+')),
+  genero text not null check (genero in ('Masculino','Femenino','Otro','Prefiero no decir')),
+
+  -- Recordación espontánea (texto libre)
+  alcaldia_espontanea text,
+  prefectura_espontanea text,
+
+  -- Recordación asistida (arrays de nombres seleccionados)
+  alcaldia_asistida text[] not null default '{}',
+  prefectura_asistida text[] not null default '{}',
+
+  -- Antifraude / metadata técnica
+  fingerprint text not null,
+  ip_hash text,                      -- hash de IP capturada en el server, no la IP en texto plano
+  user_agent text,
+  duration_seconds integer not null,
+  is_valid boolean not null default true,
+  invalid_reason text,               -- ej. 'too_fast', 'turnstile_failed', 'duplicate_fingerprint'
+  turnstile_verified boolean not null default false
+);
+
+comment on table public.surveys_responses is 'Respuestas finales de la encuesta ciudadana. Insertadas únicamente vía Server Action tras validar Turnstile.';
+
+create index idx_surveys_parroquia on public.surveys_responses (parroquia);
+create index idx_surveys_created_at on public.surveys_responses (created_at desc);
+create index idx_surveys_is_valid on public.surveys_responses (is_valid);
+create index idx_surveys_fingerprint on public.surveys_responses (fingerprint);
+
+-- 0004_rls_policies.sql
+alter table public.surveys_responses enable row level security;
+alter table public.candidates enable row level security;
+
+-- surveys_responses: cualquiera (anon) puede insertar, nadie anónimo puede leer
+create policy "anon_can_insert_responses"
+  on public.surveys_responses
+  for insert
+  to anon
+  with check (true);
+
+create policy "authenticated_can_select_responses"
+  on public.surveys_responses
+  for select
+  to authenticated
+  using (true);
+
+create policy "authenticated_can_update_responses"
+  on public.surveys_responses
+  for update
+  to authenticated
+  using (true);
+
+create policy "authenticated_can_delete_responses"
+  on public.surveys_responses
+  for delete
+  to authenticated
+  using (true);
+
+-- candidates: lectura pública (para poblar los checkboxes), escritura solo autenticado
+create policy "anyone_can_read_active_candidates"
+  on public.candidates
+  for select
+  to anon, authenticated
+  using (is_active = true);
+
+create policy "authenticated_can_manage_candidates"
+  on public.candidates
+  for all
+  to authenticated
+  using (true)
+  with check (true);
+
+-- 0005_views_dashboard.sql
+create or replace view public.vw_recordacion_alcaldia as
+select
+  candidate_name,
+  count(*) filter (where source = 'espontanea') as menciones_espontaneas,
+  count(*) filter (where source = 'asistida') as menciones_asistidas
+from (
+  select unnest(string_to_array(alcaldia_espontanea, ',')) as candidate_name, 'espontanea' as source
+  from public.surveys_responses where is_valid = true and alcaldia_espontanea is not null
+  union all
+  select unnest(alcaldia_asistida) as candidate_name, 'asistida' as source
+  from public.surveys_responses where is_valid = true
+) sub
+group by candidate_name;
+
+-- Análoga a vw_recordacion_alcaldia para la Prefectura de Chimborazo (necesaria para
+-- el selector de pestañas Alcaldía/Prefectura del dashboard, ver §12.3 del spec).
+create or replace view public.vw_recordacion_prefectura as
+select
+  candidate_name,
+  count(*) filter (where source = 'espontanea') as menciones_espontaneas,
+  count(*) filter (where source = 'asistida') as menciones_asistidas
+from (
+  select unnest(string_to_array(prefectura_espontanea, ',')) as candidate_name, 'espontanea' as source
+  from public.surveys_responses where is_valid = true and prefectura_espontanea is not null
+  union all
+  select unnest(prefectura_asistida) as candidate_name, 'asistida' as source
+  from public.surveys_responses where is_valid = true
+) sub
+group by candidate_name;
+
+create or replace view public.vw_demografia_parroquia as
+select parroquia, count(*) as total
+from public.surveys_responses
+where is_valid = true
+group by parroquia
+order by total desc;
+
+create or replace view public.vw_demografia_edad as
+select edad, count(*) as total
+from public.surveys_responses
+where is_valid = true
+group by edad;
+
+create or replace view public.vw_metricas_globales as
+select
+  count(*) as total_respuestas,
+  count(*) filter (where is_valid = true) as respuestas_validas,
+  round(avg(duration_seconds) filter (where is_valid = true)) as duracion_promedio_seg
+from public.surveys_responses;
+
+-- 0006_seed_candidates.sql
+-- PLACEHOLDER: reemplazar con los nombres reales de candidatos oficializados por el CNE
+-- antes de publicar la encuesta. No inventar nombres de candidatos reales aquí.
+insert into public.candidates (name, dignity, display_order) values
+  ('Candidato A (editar)', 'alcaldia_riobamba', 1),
+  ('Candidato B (editar)', 'alcaldia_riobamba', 2),
+  ('Candidato A (editar)', 'prefectura_chimborazo', 1),
+  ('Candidato B (editar)', 'prefectura_chimborazo', 2);
+
+-- ============================================================================
+-- Verificación opcional: corre esto después para confirmar que RLS quedó activo
+-- ============================================================================
+-- select * from pg_policies where tablename in ('surveys_responses','candidates');

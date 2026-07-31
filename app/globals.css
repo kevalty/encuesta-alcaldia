@@ -1,0 +1,40 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-bg: #F5F3EE;
+  --color-ink: #232320;
+  --color-andes: #2F4858;
+  --color-paja: #C9A227;
+  --color-volcan: #7A2E2E;
+  --color-neutral: #8B8B82;
+}
+
+html {
+  background: var(--color-bg);
+}
+
+body {
+  color: var(--color-ink);
+  background: var(--color-bg);
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
