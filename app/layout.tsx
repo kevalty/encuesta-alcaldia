@@ -17,8 +17,20 @@ const publicSans = Public_Sans({
   display: "swap",
 });
 
+function resolveSiteUrl(): URL {
+  const raw = process.env.NEXT_PUBLIC_SITE_URL;
+  if (raw) {
+    try {
+      return new URL(raw);
+    } catch {
+      // Variable de entorno mal formada (ej. sin "https://") — no debe tumbar el layout raíz.
+    }
+  }
+  return new URL("http://localhost:3000");
+}
+
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
+  metadataBase: resolveSiteUrl(),
   title: "Encuesta Ciudadana 2027 · Riobamba y Chimborazo",
   description:
     "Encuesta ciudadana independiente para medir el pulso político de la Alcaldía de Riobamba y la Prefectura de Chimborazo. No vinculante, no oficial.",
