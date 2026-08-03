@@ -27,8 +27,9 @@ export default function AdminLoginPage() {
   }
 
   return (
-    <main className="min-h-dvh flex items-center justify-center px-6">
-      <form onSubmit={handleSubmit} className="w-full max-w-sm space-y-5">
+    <main className="relative min-h-dvh flex items-center justify-center px-6 overflow-hidden">
+      <div className="absolute inset-0 bg-grid-riobamba opacity-[0.04] pointer-events-none" />
+      <form onSubmit={handleSubmit} className="relative z-10 w-full max-w-sm space-y-5">
         <div className="text-center space-y-1">
           <h1 className="font-display text-2xl font-medium text-ink">Panel de administración</h1>
           <p className="font-body text-sm text-neutral">Encuesta Ciudadana 2027</p>

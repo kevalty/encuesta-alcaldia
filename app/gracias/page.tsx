@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { PartyPopper } from 'lucide-react';
 import { ChimborazoWatermark } from '@/components/ui/ChimborazoWatermark';
+import { RiobambaTower } from '@/components/ui/RiobambaTower';
 
 export default function GraciasPage({
   searchParams,
@@ -11,7 +12,9 @@ export default function GraciasPage({
 
   return (
     <main className="relative min-h-dvh flex flex-col items-center justify-center px-6 text-center overflow-hidden">
-      <ChimborazoWatermark className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[140%] max-w-none text-neutral/30 pointer-events-none" />
+      <div className="absolute inset-0 bg-grid-riobamba opacity-[0.04] pointer-events-none" />
+      <ChimborazoWatermark className="absolute bottom-0 left-1/2 -translate-x-1/2 h-48 md:h-64 w-auto text-neutral/25 pointer-events-none" />
+      <RiobambaTower className="absolute bottom-0 left-1/2 -translate-x-1/2 h-20 md:h-28 w-auto text-andes/40 pointer-events-none" />
       <div className="relative z-10 max-w-md space-y-4">
         <PartyPopper className="mx-auto text-paja" size={48} />
         <h1 className="font-display text-2xl md:text-4xl font-medium text-ink text-balance">

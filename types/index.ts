@@ -16,6 +16,7 @@ export interface Candidate {
 }
 
 export interface SurveyPayload {
+  nombre: string;
   parroquia: Parroquia;
   edad: RangoEdad;
   genero: Genero;

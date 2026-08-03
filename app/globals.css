@@ -3,21 +3,22 @@
 @tailwind utilities;
 
 :root {
-  --color-bg: #F5F3EE;
-  --color-ink: #232320;
-  --color-andes: #2F4858;
-  --color-paja: #C9A227;
-  --color-volcan: #7A2E2E;
-  --color-neutral: #8B8B82;
+  /* Tripletas RGB (no hex): así Tailwind puede aplicar opacidad vía rgb(var(...) / alpha). */
+  --color-bg: 245 243 238;      /* #F5F3EE */
+  --color-ink: 35 35 32;        /* #232320 */
+  --color-andes: 47 72 88;      /* #2F4858 */
+  --color-paja: 201 162 39;     /* #C9A227 */
+  --color-volcan: 122 46 46;    /* #7A2E2E */
+  --color-neutral: 139 139 130; /* #8B8B82 */
 }
 
 html {
-  background: var(--color-bg);
+  background: rgb(var(--color-bg));
 }
 
 body {
-  color: var(--color-ink);
-  background: var(--color-bg);
+  color: rgb(var(--color-ink));
+  background: rgb(var(--color-bg));
 }
 
 @layer utilities {
@@ -27,6 +28,14 @@ body {
 
   .pb-safe {
     padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  /* Trazado en cuadrícula de Riobamba (calles en damero desde la reconstrucción de 1797). */
+  .bg-grid-riobamba {
+    background-image:
+      linear-gradient(to right, rgb(var(--color-ink) / 0.5) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(var(--color-ink) / 0.5) 1px, transparent 1px);
+    background-size: 44px 44px;
   }
 }
 

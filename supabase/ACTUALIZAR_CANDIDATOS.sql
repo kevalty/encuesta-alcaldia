@@ -1,5 +1,7 @@
--- Candidatos provistos por el cliente (2026-08-03). Orden fijo y documentado
--- por neutralidad del instrumento (§14.2 del spec) — no reordenar por popularidad.
+-- Corre esto en el SQL Editor de Supabase para reemplazar los candidatos
+-- placeholder ("Candidato A/B (editar)") por los reales.
+delete from public.candidates;
+
 insert into public.candidates (name, dignity, display_order) values
   ('Santiago Abarca', 'alcaldia_riobamba', 1),
   ('Dorian Jara', 'alcaldia_riobamba', 2),

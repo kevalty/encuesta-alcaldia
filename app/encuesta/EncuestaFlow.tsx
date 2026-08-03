@@ -12,6 +12,7 @@ import { Slide3PrefecturaEspontanea } from '@/components/survey/Slide3Prefectura
 import { Slide4AlcaldiaAsistida } from '@/components/survey/Slide4AlcaldiaAsistida';
 import { Slide5PrefecturaAsistida } from '@/components/survey/Slide5PrefecturaAsistida';
 import { Slide6Finalizacion } from '@/components/survey/Slide6Finalizacion';
+import { RiobambaTower } from '@/components/ui/RiobambaTower';
 import type { Candidate } from '@/types';
 
 interface EncuestaFlowProps {
@@ -26,6 +27,7 @@ export function EncuestaFlow({ alcaldiaCandidatos, prefecturaCandidatos }: Encue
   const nextDisabled = useMemo(() => {
     if (currentSlide === 1) {
       return !slide1Schema.safeParse({
+        nombre: store.nombre,
         parroquia: store.parroquia,
         edad: store.edad,
         genero: store.genero,
@@ -42,6 +44,11 @@ export function EncuestaFlow({ alcaldiaCandidatos, prefecturaCandidatos }: Encue
 
   return (
     <main className="relative min-h-dvh overflow-hidden">
+      <div className="absolute inset-0 bg-grid-riobamba opacity-[0.03] pointer-events-none" />
+      <div className="hidden lg:flex items-center gap-2 fixed top-6 left-8 z-30 text-neutral pointer-events-none">
+        <RiobambaTower className="h-7 w-auto text-andes/50" />
+        <span className="font-body text-xs tracking-widest uppercase">Encuesta Ciudadana 2027</span>
+      </div>
       <ProgressBar currentSlide={currentSlide} />
       <SlideWrapper slideKey={currentSlide} direction={direction}>
         {currentSlide === 1 && <Slide1Demografia />}

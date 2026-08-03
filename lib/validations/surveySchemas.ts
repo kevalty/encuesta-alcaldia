@@ -7,6 +7,7 @@ export const parroquiaSchema = z.enum([
 ]);
 
 export const slide1Schema = z.object({
+  nombre: z.string().trim().min(2, 'Escribe tu nombre completo').max(100),
   parroquia: parroquiaSchema,
   edad: z.enum(['16-20', '21-35', '36-50', '51+']),
   genero: z.enum(['Masculino', 'Femenino', 'Otro', 'Prefiero no decir']),

@@ -155,13 +155,27 @@ select
 from public.surveys_responses;
 
 -- 0006_seed_candidates.sql
--- PLACEHOLDER: reemplazar con los nombres reales de candidatos oficializados por el CNE
--- antes de publicar la encuesta. No inventar nombres de candidatos reales aquí.
+-- Candidatos provistos por el cliente (2026-08-03). Orden fijo y documentado
+-- por neutralidad del instrumento (§14.2 del spec) — no reordenar por popularidad.
 insert into public.candidates (name, dignity, display_order) values
-  ('Candidato A (editar)', 'alcaldia_riobamba', 1),
-  ('Candidato B (editar)', 'alcaldia_riobamba', 2),
-  ('Candidato A (editar)', 'prefectura_chimborazo', 1),
-  ('Candidato B (editar)', 'prefectura_chimborazo', 2);
+  ('Santiago Abarca', 'alcaldia_riobamba', 1),
+  ('Dorian Jara', 'alcaldia_riobamba', 2),
+  ('Cesar Daqui', 'alcaldia_riobamba', 3),
+  ('Maximiliano Nuñez', 'alcaldia_riobamba', 4),
+  ('Leonardo Sefla', 'prefectura_chimborazo', 1),
+  ('Jorge Romero', 'prefectura_chimborazo', 2),
+  ('Juan Pablo Cruz', 'prefectura_chimborazo', 3),
+  ('Norma Guaman', 'prefectura_chimborazo', 4);
+
+-- 0007_add_nombre.sql
+-- Agrega identificación por nombre (obligatorio) y marca de posible duplicado.
+-- Un nombre repetido NO bloquea el envío (dos personas reales pueden compartir
+-- nombre) — se guarda igual y queda marcado para revisión manual en el dashboard.
+alter table public.surveys_responses
+  add column nombre text not null default '',
+  add column is_possible_duplicate boolean not null default false;
+
+create index idx_surveys_nombre_lower on public.surveys_responses (lower(nombre));
 
 -- ============================================================================
 -- Verificación opcional: corre esto después para confirmar que RLS quedó activo

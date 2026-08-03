@@ -48,6 +48,7 @@ export function Slide6Finalizacion() {
       : 0;
 
     const payload = fullSubmitSchema.safeParse({
+      nombre: store.nombre,
       parroquia: store.parroquia,
       edad: store.edad,
       genero: store.genero,

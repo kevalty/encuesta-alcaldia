@@ -7,6 +7,7 @@ interface SurveyState {
   direction: number;
   startedAt: number | null;
 
+  nombre: string;
   parroquia: Parroquia | null;
   edad: RangoEdad | null;
   genero: Genero | null;
@@ -15,6 +16,7 @@ interface SurveyState {
   alcaldiaAsistida: string[];
   prefecturaAsistida: string[];
 
+  setNombre: (v: string) => void;
   setParroquia: (p: Parroquia) => void;
   setEdad: (e: RangoEdad) => void;
   setGenero: (g: Genero) => void;
@@ -32,6 +34,7 @@ const initialState = {
   currentSlide: 1,
   direction: 1,
   startedAt: null,
+  nombre: '',
   parroquia: null,
   edad: null,
   genero: null,
@@ -44,6 +47,7 @@ const initialState = {
 export const useSurveyStore = create<SurveyState>((set, get) => ({
   ...initialState,
 
+  setNombre: (v) => set({ nombre: v }),
   setParroquia: (p) => set({ parroquia: p }),
   setEdad: (e) => set({ edad: e }),
   setGenero: (g) => set({ genero: g }),

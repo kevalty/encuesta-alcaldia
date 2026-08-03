@@ -7,7 +7,8 @@ import { PARROQUIAS_URBANAS, PARROQUIAS_RURALES, RANGOS_EDAD, GENEROS } from '@/
 import type { Parroquia } from '@/types';
 
 export function Slide1Demografia() {
-  const { parroquia, edad, genero, setParroquia, setEdad, setGenero, startTimer } = useSurveyStore();
+  const { nombre, parroquia, edad, genero, setNombre, setParroquia, setEdad, setGenero, startTimer } =
+    useSurveyStore();
 
   useEffect(() => {
     startTimer();
@@ -18,6 +19,24 @@ export function Slide1Demografia() {
       <h1 className="font-display text-2xl md:text-4xl font-medium text-ink text-balance">
         Cuéntanos un poco sobre ti
       </h1>
+
+      <div className="space-y-2">
+        <label htmlFor="nombre" className="text-sm font-body text-neutral">
+          Tu nombre
+        </label>
+        <input
+          id="nombre"
+          type="text"
+          value={nombre}
+          onChange={(e) => setNombre(e.target.value)}
+          placeholder="Nombre completo"
+          maxLength={100}
+          className="w-full min-h-[44px] px-4 py-3 text-base font-body bg-transparent border-b-2 border-neutral/40 text-ink placeholder:text-neutral/60 focus:outline-none focus:border-andes transition-colors"
+        />
+        <p className="text-xs font-body text-neutral">
+          Solo se usa para evitar respuestas duplicadas, no se comparte públicamente.
+        </p>
+      </div>
 
       <div className="space-y-2">
         <label htmlFor="parroquia" className="text-sm font-body text-neutral">
