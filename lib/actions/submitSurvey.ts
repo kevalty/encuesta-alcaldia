@@ -5,6 +5,7 @@ import { createServerSupabaseClient } from '@/lib/supabase/server';
 import { fullSubmitSchema, type FullSubmitInput } from '@/lib/validations/surveySchemas';
 import { verifyTurnstile } from './verifyTurnstile';
 import { hashFingerprint } from '@/lib/utils/antifraude';
+import { TESTING_MODE } from '@/lib/constants';
 import type { SubmitResult } from '@/types';
 
 export async function submitSurvey(input: FullSubmitInput): Promise<SubmitResult> {
@@ -13,9 +14,11 @@ export async function submitSurvey(input: FullSubmitInput): Promise<SubmitResult
     return { success: false, error: 'Datos inválidos' };
   }
 
-  const turnstileOk = await verifyTurnstile(parsed.data.turnstile_token);
-  if (!turnstileOk) {
-    return { success: false, error: 'Verificación de seguridad fallida' };
+  if (!TESTING_MODE) {
+    const turnstileOk = await verifyTurnstile(parsed.data.turnstile_token);
+    if (!turnstileOk) {
+      return { success: false, error: 'Verificación de seguridad fallida' };
+    }
   }
 
   const headersList = headers();
@@ -45,7 +48,7 @@ export async function submitSurvey(input: FullSubmitInput): Promise<SubmitResult
     duration_seconds: parsed.data.duration_seconds,
     is_valid: !isTooFast,
     invalid_reason: isTooFast ? 'too_fast' : null,
-    turnstile_verified: true,
+    turnstile_verified: !TESTING_MODE,
   });
 
   if (error) {

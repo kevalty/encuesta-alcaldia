@@ -1,13 +1,13 @@
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { createServerSupabaseClient } from '@/lib/supabase/server';
-import { HAS_VOTED_COOKIE } from '@/lib/constants';
+import { HAS_VOTED_COOKIE, TESTING_MODE } from '@/lib/constants';
 import { EncuestaFlow } from './EncuestaFlow';
 import type { Candidate } from '@/types';
 
 export default async function EncuestaPage() {
   const cookieStore = cookies();
-  if (cookieStore.get(HAS_VOTED_COOKIE)?.value === 'true') {
+  if (!TESTING_MODE && cookieStore.get(HAS_VOTED_COOKIE)?.value === 'true') {
     redirect('/gracias?ya=1');
   }
 

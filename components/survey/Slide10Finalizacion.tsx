@@ -8,7 +8,7 @@ import confetti from 'canvas-confetti';
 import { useSurveyStore } from '@/lib/store/surveyStore';
 import { submitSurvey } from '@/lib/actions/submitSurvey';
 import { fullSubmitSchema } from '@/lib/validations/surveySchemas';
-import { HAS_VOTED_COOKIE, HAS_VOTED_SESSION_KEY } from '@/lib/constants';
+import { HAS_VOTED_COOKIE, HAS_VOTED_SESSION_KEY, TESTING_MODE } from '@/lib/constants';
 import { Spinner } from '@/components/ui/Spinner';
 
 type SubmitState = 'idle' | 'submitting' | 'success' | 'error';
@@ -40,7 +40,7 @@ export function Slide10Finalizacion() {
   const [turnstileToken, setTurnstileToken] = useState<string>('');
 
   const handleSubmit = useCallback(async () => {
-    if (!turnstileToken || state === 'submitting') return;
+    if ((!turnstileToken && !TESTING_MODE) || state === 'submitting') return;
     setState('submitting');
 
     const durationSeconds = store.startedAt
@@ -61,7 +61,7 @@ export function Slide10Finalizacion() {
       alcaldia_asistida: store.alcaldiaAsistida,
       prefectura_asistida: store.prefecturaAsistida,
       duration_seconds: durationSeconds,
-      turnstile_token: turnstileToken,
+      turnstile_token: TESTING_MODE ? 'testing_mode' : turnstileToken,
     });
 
     if (!payload.success) {
@@ -115,22 +115,24 @@ export function Slide10Finalizacion() {
         ¡Ya casi terminamos!
       </h1>
       <p className="font-body text-neutral">
-        Confirma que no eres un robot y envía tus respuestas.
+        {TESTING_MODE ? 'Modo prueba activo: sin verificación.' : 'Confirma que no eres un robot y envía tus respuestas.'}
       </p>
 
-      <div className="flex justify-center">
-        <Turnstile
-          siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? ''}
-          options={{ theme: 'light', size: 'normal' }}
-          onSuccess={setTurnstileToken}
-          onExpire={() => setTurnstileToken('')}
-        />
-      </div>
+      {!TESTING_MODE && (
+        <div className="flex justify-center">
+          <Turnstile
+            siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? ''}
+            options={{ theme: 'light', size: 'normal' }}
+            onSuccess={setTurnstileToken}
+            onExpire={() => setTurnstileToken('')}
+          />
+        </div>
+      )}
 
       <button
         type="button"
         onClick={handleSubmit}
-        disabled={!turnstileToken || state === 'submitting'}
+        disabled={(!turnstileToken && !TESTING_MODE) || state === 'submitting'}
         className="w-full min-h-[44px] flex items-center justify-center gap-2 rounded-full bg-andes text-bg font-body font-medium disabled:bg-neutral/20 disabled:text-neutral disabled:cursor-not-allowed hover:enabled:bg-andes/90 transition-colors"
       >
         {state === 'submitting' ? <Spinner size={18} /> : 'Enviar respuestas'}

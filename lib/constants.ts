@@ -49,3 +49,8 @@ export const NINGUNO_DE_LOS_ANTERIORES = 'Ninguno de los anteriores';
 
 export const HAS_VOTED_COOKIE = 'has_voted_2027';
 export const HAS_VOTED_SESSION_KEY = 'encuesta_2027_completada';
+
+// Modo prueba temporal: pon NEXT_PUBLIC_TESTING_MODE=true en .env.local (nunca
+// en Vercel/producción) para desactivar el bloqueo de "ya respondiste" y el
+// requisito de Turnstile, y poder enviar varias encuestas seguidas de prueba.
+export const TESTING_MODE = process.env.NEXT_PUBLIC_TESTING_MODE === 'true';
