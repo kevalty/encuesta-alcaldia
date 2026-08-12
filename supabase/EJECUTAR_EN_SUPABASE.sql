@@ -223,6 +223,15 @@ alter table public.surveys_responses
 alter table public.surveys_responses
   add column prioridades_administracion text[] not null default '{}';
 
+-- 0012_allow_authenticated_insert.sql
+-- Permite que un usuario logueado (admin) también pueda insertar respuestas
+-- (ej. al probar la encuesta en el mismo navegador donde está la sesión admin).
+create policy "authenticated_can_insert_responses"
+  on public.surveys_responses
+  for insert
+  to authenticated
+  with check (true);
+
 -- ============================================================================
 -- Verificación opcional: corre esto después para confirmar que RLS quedó activo
 -- ============================================================================
