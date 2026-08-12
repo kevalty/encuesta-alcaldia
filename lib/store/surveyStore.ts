@@ -10,10 +10,10 @@ import type {
 } from '@/types';
 import { NINGUNO_DE_LOS_ANTERIORES } from '@/lib/constants';
 
-const TOTAL_SLIDES = 9;
+const TOTAL_SLIDES = 10;
 
 interface SurveyState {
-  currentSlide: number; // 1..9
+  currentSlide: number; // 1..10
   direction: number;
   startedAt: number | null;
 
@@ -23,6 +23,7 @@ interface SurveyState {
   nivelInstruccion: NivelInstruccion | null;
   estadoAnimo: EstadoAnimo | null;
   problemaPrincipal: ProblemaPrincipal | null;
+  prioridadesAdministracion: string[];
   canalComunicacion: CanalComunicacion | null;
   alcaldiaEspontanea: string;
   prefecturaEspontanea: string;
@@ -35,6 +36,7 @@ interface SurveyState {
   setNivelInstruccion: (v: NivelInstruccion) => void;
   setEstadoAnimo: (v: EstadoAnimo) => void;
   setProblemaPrincipal: (v: ProblemaPrincipal) => void;
+  togglePrioridadAdministracion: (v: string) => void;
   setCanalComunicacion: (v: CanalComunicacion) => void;
   setAlcaldiaEspontanea: (v: string) => void;
   setPrefecturaEspontanea: (v: string) => void;
@@ -56,6 +58,7 @@ const initialState = {
   nivelInstruccion: null,
   estadoAnimo: null,
   problemaPrincipal: null,
+  prioridadesAdministracion: [] as string[],
   canalComunicacion: null,
   alcaldiaEspontanea: '',
   prefecturaEspontanea: '',
@@ -72,6 +75,14 @@ export const useSurveyStore = create<SurveyState>((set, get) => ({
   setNivelInstruccion: (v) => set({ nivelInstruccion: v }),
   setEstadoAnimo: (v) => set({ estadoAnimo: v }),
   setProblemaPrincipal: (v) => set({ problemaPrincipal: v }),
+  togglePrioridadAdministracion: (v) => {
+    const current = get().prioridadesAdministracion;
+    set({
+      prioridadesAdministracion: current.includes(v)
+        ? current.filter((n) => n !== v)
+        : [...current, v],
+    });
+  },
   setCanalComunicacion: (v) => set({ canalComunicacion: v }),
   setAlcaldiaEspontanea: (v) => set({ alcaldiaEspontanea: v }),
   setPrefecturaEspontanea: (v) => set({ prefecturaEspontanea: v }),

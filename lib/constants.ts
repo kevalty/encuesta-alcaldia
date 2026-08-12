@@ -5,6 +5,7 @@ import type {
   NivelInstruccion,
   EstadoAnimo,
   ProblemaPrincipal,
+  PrioridadAdministracion,
   CanalComunicacion,
 } from '@/types';
 
@@ -30,6 +31,13 @@ export const ESTADOS_ANIMO: EstadoAnimo[] = [
 export const PROBLEMAS_PRINCIPALES: ProblemaPrincipal[] = [
   'Seguridad', 'Empleo', 'Movilidad', 'Servicios básicos',
   'Desorden municipal/corrupción', 'Comercio', 'Ambiente/limpieza', 'Otro',
+];
+
+export const PRIORIDADES_ADMINISTRACION: PrioridadAdministracion[] = [
+  'Mejorar la recolección de basura', 'Arreglar las calles y vías', 'Fomentar el turismo',
+  'Simplificar trámites municipales', 'Mejorar la seguridad ciudadana', 'Generar más empleo',
+  'Ampliar agua potable y alcantarillado', 'Apoyar el comercio y a los emprendedores',
+  'Mejorar parques y espacios públicos', 'Otro',
 ];
 
 export const CANALES_COMUNICACION: CanalComunicacion[] = [

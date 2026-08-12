@@ -16,6 +16,12 @@ export type ProblemaPrincipal =
   | 'Seguridad' | 'Empleo' | 'Movilidad' | 'Servicios básicos'
   | 'Desorden municipal/corrupción' | 'Comercio' | 'Ambiente/limpieza' | 'Otro';
 
+export type PrioridadAdministracion =
+  | 'Mejorar la recolección de basura' | 'Arreglar las calles y vías' | 'Fomentar el turismo'
+  | 'Simplificar trámites municipales' | 'Mejorar la seguridad ciudadana' | 'Generar más empleo'
+  | 'Ampliar agua potable y alcantarillado' | 'Apoyar el comercio y a los emprendedores'
+  | 'Mejorar parques y espacios públicos' | 'Otro';
+
 export type CanalComunicacion =
   | 'Facebook/Instagram' | 'WhatsApp' | 'Radio' | 'TikTok'
   | 'Medios digitales' | 'Televisión local' | 'Reuniones' | 'Familiares/amigos';
@@ -35,6 +41,7 @@ export interface SurveyPayload {
   nivel_instruccion: NivelInstruccion;
   estado_animo: EstadoAnimo;
   problema_principal: ProblemaPrincipal;
+  prioridades_administracion: string[];
   canal_comunicacion: CanalComunicacion;
   alcaldia_espontanea: string;
   prefectura_espontanea: string;

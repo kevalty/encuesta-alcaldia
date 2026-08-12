@@ -4,7 +4,7 @@ import { useSurveyStore } from '@/lib/store/surveyStore';
 import { PillButton } from '@/components/ui/PillButton';
 import { CANALES_COMUNICACION } from '@/lib/constants';
 
-export function Slide4CanalComunicacion() {
+export function Slide5CanalComunicacion() {
   const { canalComunicacion, setCanalComunicacion } = useSurveyStore();
 
   return (

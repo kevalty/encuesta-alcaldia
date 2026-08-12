@@ -33,6 +33,7 @@ export async function submitSurvey(input: FullSubmitInput): Promise<SubmitResult
     nivel_instruccion: parsed.data.nivel_instruccion,
     estado_animo: parsed.data.estado_animo,
     problema_principal: parsed.data.problema_principal,
+    prioridades_administracion: parsed.data.prioridades_administracion,
     canal_comunicacion: parsed.data.canal_comunicacion,
     alcaldia_espontanea: parsed.data.alcaldia_espontanea || null,
     prefectura_espontanea: parsed.data.prefectura_espontanea || null,

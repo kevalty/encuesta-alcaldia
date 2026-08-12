@@ -28,25 +28,34 @@ export const slide3Schema = z.object({
 });
 
 export const slide4Schema = z.object({
+  prioridades_administracion: z.array(z.enum([
+    'Mejorar la recolección de basura', 'Arreglar las calles y vías', 'Fomentar el turismo',
+    'Simplificar trámites municipales', 'Mejorar la seguridad ciudadana', 'Generar más empleo',
+    'Ampliar agua potable y alcantarillado', 'Apoyar el comercio y a los emprendedores',
+    'Mejorar parques y espacios públicos', 'Otro',
+  ])).min(0),
+});
+
+export const slide5Schema = z.object({
   canal_comunicacion: z.enum([
     'Facebook/Instagram', 'WhatsApp', 'Radio', 'TikTok',
     'Medios digitales', 'Televisión local', 'Reuniones', 'Familiares/amigos',
   ]),
 });
 
-export const slide5Schema = z.object({
+export const slide6Schema = z.object({
   alcaldia_espontanea: z.string().max(200).optional().default(''),
 });
 
-export const slide6Schema = z.object({
+export const slide7Schema = z.object({
   prefectura_espontanea: z.string().max(200).optional().default(''),
 });
 
-export const slide7Schema = z.object({
+export const slide8Schema = z.object({
   alcaldia_asistida: z.array(z.string()).min(0),
 });
 
-export const slide8Schema = z.object({
+export const slide9Schema = z.object({
   prefectura_asistida: z.array(z.string()).min(0),
 });
 
@@ -58,6 +67,7 @@ export const fullSubmitSchema = slide1Schema
   .merge(slide6Schema)
   .merge(slide7Schema)
   .merge(slide8Schema)
+  .merge(slide9Schema)
   .extend({
     duration_seconds: z.number().int().nonnegative(),
     turnstile_token: z.string().min(1, 'Falta verificación anti-bot'),

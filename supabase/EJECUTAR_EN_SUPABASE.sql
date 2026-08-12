@@ -218,6 +218,11 @@ alter table public.surveys_responses
     nivel_instruccion in ('', 'Ninguna', 'Primaria', 'Secundaria', 'Superior')
   );
 
+-- 0011_add_prioridades_administracion.sql
+-- Prioridades para la nueva administración (selección múltiple).
+alter table public.surveys_responses
+  add column prioridades_administracion text[] not null default '{}';
+
 -- ============================================================================
 -- Verificación opcional: corre esto después para confirmar que RLS quedó activo
 -- ============================================================================

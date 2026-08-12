@@ -3,7 +3,7 @@
 import { useSurveyStore } from '@/lib/store/surveyStore';
 import { TextFieldLarge } from '@/components/ui/TextFieldLarge';
 
-export function Slide6PrefecturaEspontanea() {
+export function Slide7PrefecturaEspontanea() {
   const { prefecturaEspontanea, setPrefecturaEspontanea } = useSurveyStore();
 
   return (

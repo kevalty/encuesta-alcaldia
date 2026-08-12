@@ -5,11 +5,11 @@ import { CheckboxCard } from '@/components/ui/CheckboxCard';
 import { NINGUNO_DE_LOS_ANTERIORES } from '@/lib/constants';
 import type { Candidate } from '@/types';
 
-interface Slide7Props {
+interface Slide8Props {
   candidates: Candidate[];
 }
 
-export function Slide7AlcaldiaAsistida({ candidates }: Slide7Props) {
+export function Slide8AlcaldiaAsistida({ candidates }: Slide8Props) {
   const { alcaldiaAsistida, toggleAlcaldiaAsistida } = useSurveyStore();
 
   return (
