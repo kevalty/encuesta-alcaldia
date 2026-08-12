@@ -1,9 +1,18 @@
 import { create } from 'zustand';
-import type { Parroquia, RangoEdad, Genero } from '@/types';
+import type {
+  Parroquia,
+  RangoEdad,
+  Genero,
+  EstadoAnimo,
+  ProblemaPrincipal,
+  CanalComunicacion,
+} from '@/types';
 import { NINGUNO_DE_LOS_ANTERIORES } from '@/lib/constants';
 
+const TOTAL_SLIDES = 9;
+
 interface SurveyState {
-  currentSlide: number; // 1..6
+  currentSlide: number; // 1..9
   direction: number;
   startedAt: number | null;
 
@@ -11,6 +20,9 @@ interface SurveyState {
   parroquia: Parroquia | null;
   edad: RangoEdad | null;
   genero: Genero | null;
+  estadoAnimo: EstadoAnimo | null;
+  problemaPrincipal: ProblemaPrincipal | null;
+  canalComunicacion: CanalComunicacion | null;
   alcaldiaEspontanea: string;
   prefecturaEspontanea: string;
   alcaldiaAsistida: string[];
@@ -20,6 +32,9 @@ interface SurveyState {
   setParroquia: (p: Parroquia) => void;
   setEdad: (e: RangoEdad) => void;
   setGenero: (g: Genero) => void;
+  setEstadoAnimo: (v: EstadoAnimo) => void;
+  setProblemaPrincipal: (v: ProblemaPrincipal) => void;
+  setCanalComunicacion: (v: CanalComunicacion) => void;
   setAlcaldiaEspontanea: (v: string) => void;
   setPrefecturaEspontanea: (v: string) => void;
   toggleAlcaldiaAsistida: (name: string) => void;
@@ -38,6 +53,9 @@ const initialState = {
   parroquia: null,
   edad: null,
   genero: null,
+  estadoAnimo: null,
+  problemaPrincipal: null,
+  canalComunicacion: null,
   alcaldiaEspontanea: '',
   prefecturaEspontanea: '',
   alcaldiaAsistida: [] as string[],
@@ -51,6 +69,9 @@ export const useSurveyStore = create<SurveyState>((set, get) => ({
   setParroquia: (p) => set({ parroquia: p }),
   setEdad: (e) => set({ edad: e }),
   setGenero: (g) => set({ genero: g }),
+  setEstadoAnimo: (v) => set({ estadoAnimo: v }),
+  setProblemaPrincipal: (v) => set({ problemaPrincipal: v }),
+  setCanalComunicacion: (v) => set({ canalComunicacion: v }),
   setAlcaldiaEspontanea: (v) => set({ alcaldiaEspontanea: v }),
   setPrefecturaEspontanea: (v) => set({ prefecturaEspontanea: v }),
 
@@ -86,7 +107,8 @@ export const useSurveyStore = create<SurveyState>((set, get) => ({
     if (!get().startedAt) set({ startedAt: Date.now() });
   },
 
-  goNext: () => set((s) => ({ currentSlide: Math.min(s.currentSlide + 1, 6), direction: 1 })),
+  goNext: () =>
+    set((s) => ({ currentSlide: Math.min(s.currentSlide + 1, TOTAL_SLIDES), direction: 1 })),
   goBack: () => set((s) => ({ currentSlide: Math.max(s.currentSlide - 1, 1), direction: -1 })),
   reset: () => set(initialState),
 }));

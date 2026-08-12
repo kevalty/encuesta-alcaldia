@@ -2,18 +2,23 @@
 
 import { useMemo } from 'react';
 import { useSurveyStore } from '@/lib/store/surveyStore';
-import { slide1Schema, slide2Schema, slide3Schema } from '@/lib/validations/surveySchemas';
+import { slide1Schema, slide2Schema, slide3Schema, slide4Schema } from '@/lib/validations/surveySchemas';
 import { ProgressBar } from '@/components/survey/ProgressBar';
 import { SlideWrapper } from '@/components/survey/SlideWrapper';
 import { NavigationButtons } from '@/components/survey/NavigationButtons';
 import { Slide1Demografia } from '@/components/survey/Slide1Demografia';
-import { Slide2AlcaldiaEspontanea } from '@/components/survey/Slide2AlcaldiaEspontanea';
-import { Slide3PrefecturaEspontanea } from '@/components/survey/Slide3PrefecturaEspontanea';
-import { Slide4AlcaldiaAsistida } from '@/components/survey/Slide4AlcaldiaAsistida';
-import { Slide5PrefecturaAsistida } from '@/components/survey/Slide5PrefecturaAsistida';
-import { Slide6Finalizacion } from '@/components/survey/Slide6Finalizacion';
+import { Slide2EstadoAnimo } from '@/components/survey/Slide2EstadoAnimo';
+import { Slide3ProblemaPrincipal } from '@/components/survey/Slide3ProblemaPrincipal';
+import { Slide4CanalComunicacion } from '@/components/survey/Slide4CanalComunicacion';
+import { Slide5AlcaldiaEspontanea } from '@/components/survey/Slide5AlcaldiaEspontanea';
+import { Slide6PrefecturaEspontanea } from '@/components/survey/Slide6PrefecturaEspontanea';
+import { Slide7AlcaldiaAsistida } from '@/components/survey/Slide7AlcaldiaAsistida';
+import { Slide8PrefecturaAsistida } from '@/components/survey/Slide8PrefecturaAsistida';
+import { Slide9Finalizacion } from '@/components/survey/Slide9Finalizacion';
 import { RiobambaTower } from '@/components/ui/RiobambaTower';
 import type { Candidate } from '@/types';
+
+const TOTAL_SLIDES = 9;
 
 interface EncuestaFlowProps {
   alcaldiaCandidatos: Candidate[];
@@ -34,10 +39,13 @@ export function EncuestaFlow({ alcaldiaCandidatos, prefecturaCandidatos }: Encue
       }).success;
     }
     if (currentSlide === 2) {
-      return !slide2Schema.safeParse({ alcaldia_espontanea: store.alcaldiaEspontanea }).success;
+      return !slide2Schema.safeParse({ estado_animo: store.estadoAnimo }).success;
     }
     if (currentSlide === 3) {
-      return !slide3Schema.safeParse({ prefectura_espontanea: store.prefecturaEspontanea }).success;
+      return !slide3Schema.safeParse({ problema_principal: store.problemaPrincipal }).success;
+    }
+    if (currentSlide === 4) {
+      return !slide4Schema.safeParse({ canal_comunicacion: store.canalComunicacion }).success;
     }
     return false;
   }, [currentSlide, store]);
@@ -49,16 +57,19 @@ export function EncuestaFlow({ alcaldiaCandidatos, prefecturaCandidatos }: Encue
         <RiobambaTower className="h-7 w-auto text-andes/50" />
         <span className="font-body text-xs tracking-widest uppercase">Encuesta Ciudadana 2027</span>
       </div>
-      <ProgressBar currentSlide={currentSlide} />
+      <ProgressBar currentSlide={currentSlide} totalSlides={TOTAL_SLIDES} />
       <SlideWrapper slideKey={currentSlide} direction={direction}>
         {currentSlide === 1 && <Slide1Demografia />}
-        {currentSlide === 2 && <Slide2AlcaldiaEspontanea />}
-        {currentSlide === 3 && <Slide3PrefecturaEspontanea />}
-        {currentSlide === 4 && <Slide4AlcaldiaAsistida candidates={alcaldiaCandidatos} />}
-        {currentSlide === 5 && <Slide5PrefecturaAsistida candidates={prefecturaCandidatos} />}
-        {currentSlide === 6 && <Slide6Finalizacion />}
+        {currentSlide === 2 && <Slide2EstadoAnimo />}
+        {currentSlide === 3 && <Slide3ProblemaPrincipal />}
+        {currentSlide === 4 && <Slide4CanalComunicacion />}
+        {currentSlide === 5 && <Slide5AlcaldiaEspontanea />}
+        {currentSlide === 6 && <Slide6PrefecturaEspontanea />}
+        {currentSlide === 7 && <Slide7AlcaldiaAsistida candidates={alcaldiaCandidatos} />}
+        {currentSlide === 8 && <Slide8PrefecturaAsistida candidates={prefecturaCandidatos} />}
+        {currentSlide === 9 && <Slide9Finalizacion />}
       </SlideWrapper>
-      {currentSlide < 6 && (
+      {currentSlide < TOTAL_SLIDES && (
         <NavigationButtons
           onBack={currentSlide > 1 ? goBack : undefined}
           showBack={currentSlide > 1}

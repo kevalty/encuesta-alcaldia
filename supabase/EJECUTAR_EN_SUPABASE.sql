@@ -177,6 +177,39 @@ alter table public.surveys_responses
 
 create index idx_surveys_nombre_lower on public.surveys_responses (lower(nombre));
 
+-- 0008_add_clima_ciudadano.sql
+-- Variables complementarias de clima ciudadano (estado de ánimo, problema
+-- principal percibido, canal de comunicación preferido). Opciones tomadas del
+-- informe de fotografía electoral SAV (julio 2026) para poder comparar lecturas.
+alter table public.surveys_responses
+  add column estado_animo text not null default '' check (
+    estado_animo in (
+      '', 'Preocupación', 'Esperanza', 'Desconfianza',
+      'Molestia', 'Optimismo moderado', 'Indiferencia'
+    )
+  ),
+  add column problema_principal text not null default '' check (
+    problema_principal in (
+      '', 'Seguridad', 'Empleo', 'Movilidad', 'Servicios básicos',
+      'Desorden municipal/corrupción', 'Comercio', 'Ambiente/limpieza', 'Otro'
+    )
+  ),
+  add column canal_comunicacion text not null default '' check (
+    canal_comunicacion in (
+      '', 'Facebook/Instagram', 'WhatsApp', 'Radio', 'TikTok',
+      'Medios digitales', 'Televisión local', 'Reuniones', 'Familiares/amigos'
+    )
+  );
+
+-- 0009_fix_security_definer_views.sql
+-- Sin esto, las vistas corren con los permisos de quien las creó (ignorando
+-- RLS) y podrían ser leídas por cualquiera con la anon key pública.
+alter view public.vw_recordacion_alcaldia set (security_invoker = true);
+alter view public.vw_recordacion_prefectura set (security_invoker = true);
+alter view public.vw_demografia_parroquia set (security_invoker = true);
+alter view public.vw_demografia_edad set (security_invoker = true);
+alter view public.vw_metricas_globales set (security_invoker = true);
+
 -- ============================================================================
 -- Verificación opcional: corre esto después para confirmar que RLS quedó activo
 -- ============================================================================

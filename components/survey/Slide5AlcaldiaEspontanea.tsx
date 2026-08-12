@@ -3,18 +3,18 @@
 import { useSurveyStore } from '@/lib/store/surveyStore';
 import { TextFieldLarge } from '@/components/ui/TextFieldLarge';
 
-export function Slide3PrefecturaEspontanea() {
-  const { prefecturaEspontanea, setPrefecturaEspontanea } = useSurveyStore();
+export function Slide5AlcaldiaEspontanea() {
+  const { alcaldiaEspontanea, setAlcaldiaEspontanea } = useSurveyStore();
 
   return (
     <div className="max-w-lg mx-auto w-full space-y-6">
       <h1 className="font-display text-2xl md:text-4xl font-medium text-ink text-balance">
-        Sin mirar ninguna lista, ¿qué candidato(s) a la Prefectura de Chimborazo recuerda?
+        Sin mirar ninguna lista, ¿qué candidato(s) a la Alcaldía de Riobamba recuerda?
       </h1>
 
       <TextFieldLarge
-        value={prefecturaEspontanea}
-        onChange={setPrefecturaEspontanea}
+        value={alcaldiaEspontanea}
+        onChange={setAlcaldiaEspontanea}
         placeholder="Escribe el nombre que recuerdes..."
         maxLength={200}
       />

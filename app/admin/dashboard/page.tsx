@@ -27,7 +27,7 @@ export default async function DashboardPage() {
     supabase
       .from('surveys_responses')
       .select(
-        'id, created_at, nombre, parroquia, edad, genero, alcaldia_espontanea, prefectura_espontanea, alcaldia_asistida, prefectura_asistida, duration_seconds, is_valid, is_possible_duplicate'
+        'id, created_at, nombre, parroquia, edad, genero, estado_animo, problema_principal, canal_comunicacion, alcaldia_espontanea, prefectura_espontanea, alcaldia_asistida, prefectura_asistida, duration_seconds, is_valid, is_possible_duplicate'
       )
       .eq('is_valid', true)
       .order('created_at', { ascending: false }),
