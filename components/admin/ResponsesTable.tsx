@@ -5,14 +5,13 @@ import { useState } from 'react';
 interface ResponseRow {
   id: string;
   created_at: string;
-  nombre: string;
   parroquia: string;
   edad: string;
   genero: string;
+  nivel_instruccion: string;
   alcaldia_asistida: string[];
   prefectura_asistida: string[];
   duration_seconds: number;
-  is_possible_duplicate: boolean;
 }
 
 interface ResponsesTableProps {
@@ -34,10 +33,10 @@ export function ResponsesTable({ rows }: ResponsesTableProps) {
           <thead>
             <tr className="text-left text-neutral border-b border-neutral/20">
               <th className="py-2 pr-4">Fecha</th>
-              <th className="py-2 pr-4">Nombre</th>
               <th className="py-2 pr-4">Parroquia</th>
               <th className="py-2 pr-4">Edad</th>
               <th className="py-2 pr-4">Género</th>
+              <th className="py-2 pr-4">Instrucción</th>
               <th className="py-2 pr-4">Recordación asistida</th>
               <th className="py-2 pr-4">Duración</th>
             </tr>
@@ -50,17 +49,10 @@ export function ResponsesTable({ rows }: ResponsesTableProps) {
                   <td className="py-2 pr-4 text-ink">
                     {new Date(r.created_at).toLocaleString('es-EC')}
                   </td>
-                  <td className="py-2 pr-4 text-ink">
-                    {r.nombre}
-                    {r.is_possible_duplicate && (
-                      <span className="ml-2 inline-block rounded-full bg-volcan/10 px-2 py-0.5 text-xs text-volcan">
-                        posible duplicado
-                      </span>
-                    )}
-                  </td>
                   <td className="py-2 pr-4 text-ink">{r.parroquia}</td>
                   <td className="py-2 pr-4 text-ink">{r.edad}</td>
                   <td className="py-2 pr-4 text-ink">{r.genero}</td>
+                  <td className="py-2 pr-4 text-ink">{r.nivel_instruccion || '—'}</td>
                   <td className="py-2 pr-4 text-ink max-w-xs truncate" title={asistida}>
                     {asistida || '—'}
                   </td>

@@ -27,7 +27,7 @@ export default async function DashboardPage() {
     supabase
       .from('surveys_responses')
       .select(
-        'id, created_at, nombre, parroquia, edad, genero, estado_animo, problema_principal, canal_comunicacion, alcaldia_espontanea, prefectura_espontanea, alcaldia_asistida, prefectura_asistida, duration_seconds, is_valid, is_possible_duplicate'
+        'id, created_at, parroquia, edad, genero, nivel_instruccion, estado_animo, problema_principal, canal_comunicacion, alcaldia_espontanea, prefectura_espontanea, alcaldia_asistida, prefectura_asistida, duration_seconds, is_valid'
       )
       .eq('is_valid', true)
       .order('created_at', { ascending: false }),
@@ -37,7 +37,6 @@ export default async function DashboardPage() {
   const respuestasValidas = metricas?.respuestas_validas ?? 0;
   const pctValidas = totalRespuestas > 0 ? Math.round((respuestasValidas / totalRespuestas) * 100) : 0;
   const duracionPromedio = metricas?.duracion_promedio_seg ?? 0;
-  const posiblesDuplicados = (responses ?? []).filter((r) => r.is_possible_duplicate).length;
 
   return (
     <main className="max-w-6xl mx-auto px-6 py-10 space-y-8">
@@ -51,11 +50,10 @@ export default async function DashboardPage() {
         <LogoutButton />
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <MetricCard label="Total de respuestas" value={totalRespuestas} />
         <MetricCard label="Respuestas válidas" value={`${pctValidas}%`} hint={`${respuestasValidas} de ${totalRespuestas}`} />
         <MetricCard label="Duración promedio" value={`${duracionPromedio}s`} />
-        <MetricCard label="Posibles duplicados" value={posiblesDuplicados} hint="Mismo nombre, revisar" />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

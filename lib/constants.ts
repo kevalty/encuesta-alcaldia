@@ -2,6 +2,7 @@ import type {
   Parroquia,
   RangoEdad,
   Genero,
+  NivelInstruccion,
   EstadoAnimo,
   ProblemaPrincipal,
   CanalComunicacion,
@@ -19,6 +20,8 @@ export const PARROQUIAS_RURALES: Parroquia[] = [
 export const RANGOS_EDAD: RangoEdad[] = ['16-20', '21-35', '36-50', '51+'];
 
 export const GENEROS: Genero[] = ['Masculino', 'Femenino', 'Otro', 'Prefiero no decir'];
+
+export const NIVELES_INSTRUCCION: NivelInstruccion[] = ['Ninguna', 'Primaria', 'Secundaria', 'Superior'];
 
 export const ESTADOS_ANIMO: EstadoAnimo[] = [
   'Preocupación', 'Esperanza', 'Desconfianza', 'Molestia', 'Optimismo moderado', 'Indiferencia',

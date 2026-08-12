@@ -48,10 +48,10 @@ export function Slide9Finalizacion() {
       : 0;
 
     const payload = fullSubmitSchema.safeParse({
-      nombre: store.nombre,
       parroquia: store.parroquia,
       edad: store.edad,
       genero: store.genero,
+      nivel_instruccion: store.nivelInstruccion,
       estado_animo: store.estadoAnimo,
       problema_principal: store.problemaPrincipal,
       canal_comunicacion: store.canalComunicacion,

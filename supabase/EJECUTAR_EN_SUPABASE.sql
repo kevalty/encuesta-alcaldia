@@ -210,6 +210,14 @@ alter view public.vw_demografia_parroquia set (security_invoker = true);
 alter view public.vw_demografia_edad set (security_invoker = true);
 alter view public.vw_metricas_globales set (security_invoker = true);
 
+-- 0010_add_nivel_instruccion.sql
+-- Nivel de instrucción (estudios), en vez del nombre — el cliente pidió
+-- quitar el campo de nombre y agregar este en su lugar.
+alter table public.surveys_responses
+  add column nivel_instruccion text not null default '' check (
+    nivel_instruccion in ('', 'Ninguna', 'Primaria', 'Secundaria', 'Superior')
+  );
+
 -- ============================================================================
 -- Verificación opcional: corre esto después para confirmar que RLS quedó activo
 -- ============================================================================

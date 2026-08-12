@@ -5,6 +5,7 @@ export type Parroquia =
 
 export type RangoEdad = '16-20' | '21-35' | '36-50' | '51+';
 export type Genero = 'Masculino' | 'Femenino' | 'Otro' | 'Prefiero no decir';
+export type NivelInstruccion = 'Ninguna' | 'Primaria' | 'Secundaria' | 'Superior';
 export type Dignidad = 'alcaldia_riobamba' | 'prefectura_chimborazo';
 
 export type EstadoAnimo =
@@ -28,10 +29,10 @@ export interface Candidate {
 }
 
 export interface SurveyPayload {
-  nombre: string;
   parroquia: Parroquia;
   edad: RangoEdad;
   genero: Genero;
+  nivel_instruccion: NivelInstruccion;
   estado_animo: EstadoAnimo;
   problema_principal: ProblemaPrincipal;
   canal_comunicacion: CanalComunicacion;

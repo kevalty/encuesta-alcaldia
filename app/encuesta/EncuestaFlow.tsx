@@ -32,10 +32,10 @@ export function EncuestaFlow({ alcaldiaCandidatos, prefecturaCandidatos }: Encue
   const nextDisabled = useMemo(() => {
     if (currentSlide === 1) {
       return !slide1Schema.safeParse({
-        nombre: store.nombre,
         parroquia: store.parroquia,
         edad: store.edad,
         genero: store.genero,
+        nivel_instruccion: store.nivelInstruccion,
       }).success;
     }
     if (currentSlide === 2) {

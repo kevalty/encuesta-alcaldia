@@ -2,7 +2,6 @@
 
 import { headers } from 'next/headers';
 import { createServerSupabaseClient } from '@/lib/supabase/server';
-import { createAdminSupabaseClient } from '@/lib/supabase/admin';
 import { fullSubmitSchema, type FullSubmitInput } from '@/lib/validations/surveySchemas';
 import { verifyTurnstile } from './verifyTurnstile';
 import { hashFingerprint } from '@/lib/utils/antifraude';
@@ -26,25 +25,12 @@ export async function submitSurvey(input: FullSubmitInput): Promise<SubmitResult
 
   const isTooFast = parsed.data.duration_seconds < 5;
 
-  // Chequeo de nombre duplicado: la policy RLS de "select" en surveys_responses
-  // solo permite authenticated (ver 0004_rls_policies.sql), así que el cliente
-  // anon normal no puede leer filas existentes. Usamos el cliente admin SOLO
-  // para esta lectura puntual (nunca se expone al cliente ni se usa para el
-  // insert) — excepción justificada a la regla de "admin.ts nunca en el flujo
-  // del ciudadano", porque sin esto no hay forma de detectar duplicados.
-  const adminClient = createAdminSupabaseClient();
-  const { count: duplicateCount } = await adminClient
-    .from('surveys_responses')
-    .select('id', { count: 'exact', head: true })
-    .ilike('nombre', parsed.data.nombre);
-  const isPossibleDuplicate = (duplicateCount ?? 0) > 0;
-
   const supabase = createServerSupabaseClient();
   const { error } = await supabase.from('surveys_responses').insert({
-    nombre: parsed.data.nombre,
     parroquia: parsed.data.parroquia,
     edad: parsed.data.edad,
     genero: parsed.data.genero,
+    nivel_instruccion: parsed.data.nivel_instruccion,
     estado_animo: parsed.data.estado_animo,
     problema_principal: parsed.data.problema_principal,
     canal_comunicacion: parsed.data.canal_comunicacion,
@@ -59,7 +45,6 @@ export async function submitSurvey(input: FullSubmitInput): Promise<SubmitResult
     is_valid: !isTooFast,
     invalid_reason: isTooFast ? 'too_fast' : null,
     turnstile_verified: true,
-    is_possible_duplicate: isPossibleDuplicate,
   });
 
   if (error) {

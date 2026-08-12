@@ -25,9 +25,9 @@ export default function Home() {
 
         <div className="text-left bg-ink/[0.03] border border-neutral/20 rounded-xl p-4">
           <p className="font-body text-xs text-neutral leading-relaxed">
-            Te pedimos tu nombre solo para evitar respuestas duplicadas — no se comparte
-            públicamente ni se usa con otro fin. Esta es una encuesta ciudadana independiente,
-            no vinculante: no es un sistema de votación, no reemplaza ni simula al CNE.
+            Tus respuestas son anónimas y se usan solo con fines estadísticos. Esta es una
+            encuesta ciudadana independiente, no vinculante: no es un sistema de votación, no
+            reemplaza ni simula al CNE.
           </p>
         </div>
 

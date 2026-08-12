@@ -3,6 +3,7 @@ import type {
   Parroquia,
   RangoEdad,
   Genero,
+  NivelInstruccion,
   EstadoAnimo,
   ProblemaPrincipal,
   CanalComunicacion,
@@ -16,10 +17,10 @@ interface SurveyState {
   direction: number;
   startedAt: number | null;
 
-  nombre: string;
   parroquia: Parroquia | null;
   edad: RangoEdad | null;
   genero: Genero | null;
+  nivelInstruccion: NivelInstruccion | null;
   estadoAnimo: EstadoAnimo | null;
   problemaPrincipal: ProblemaPrincipal | null;
   canalComunicacion: CanalComunicacion | null;
@@ -28,10 +29,10 @@ interface SurveyState {
   alcaldiaAsistida: string[];
   prefecturaAsistida: string[];
 
-  setNombre: (v: string) => void;
   setParroquia: (p: Parroquia) => void;
   setEdad: (e: RangoEdad) => void;
   setGenero: (g: Genero) => void;
+  setNivelInstruccion: (v: NivelInstruccion) => void;
   setEstadoAnimo: (v: EstadoAnimo) => void;
   setProblemaPrincipal: (v: ProblemaPrincipal) => void;
   setCanalComunicacion: (v: CanalComunicacion) => void;
@@ -49,10 +50,10 @@ const initialState = {
   currentSlide: 1,
   direction: 1,
   startedAt: null,
-  nombre: '',
   parroquia: null,
   edad: null,
   genero: null,
+  nivelInstruccion: null,
   estadoAnimo: null,
   problemaPrincipal: null,
   canalComunicacion: null,
@@ -65,10 +66,10 @@ const initialState = {
 export const useSurveyStore = create<SurveyState>((set, get) => ({
   ...initialState,
 
-  setNombre: (v) => set({ nombre: v }),
   setParroquia: (p) => set({ parroquia: p }),
   setEdad: (e) => set({ edad: e }),
   setGenero: (g) => set({ genero: g }),
+  setNivelInstruccion: (v) => set({ nivelInstruccion: v }),
   setEstadoAnimo: (v) => set({ estadoAnimo: v }),
   setProblemaPrincipal: (v) => set({ problemaPrincipal: v }),
   setCanalComunicacion: (v) => set({ canalComunicacion: v }),
