@@ -44,18 +44,10 @@ export const slide5Schema = z.object({
 });
 
 export const slide6Schema = z.object({
-  alcaldia_espontanea: z.string().max(200).optional().default(''),
-});
-
-export const slide7Schema = z.object({
-  prefectura_espontanea: z.string().max(200).optional().default(''),
-});
-
-export const slide8Schema = z.object({
   alcaldia_asistida: z.array(z.string()).min(0),
 });
 
-export const slide9Schema = z.object({
+export const slide7Schema = z.object({
   prefectura_asistida: z.array(z.string()).min(0),
 });
 
@@ -66,8 +58,6 @@ export const fullSubmitSchema = slide1Schema
   .merge(slide5Schema)
   .merge(slide6Schema)
   .merge(slide7Schema)
-  .merge(slide8Schema)
-  .merge(slide9Schema)
   .extend({
     duration_seconds: z.number().int().nonnegative(),
     turnstile_token: z.string().min(1, 'Falta verificación anti-bot'),

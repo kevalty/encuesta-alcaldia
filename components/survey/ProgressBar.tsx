@@ -7,7 +7,7 @@ interface ProgressBarProps {
   totalSlides?: number;
 }
 
-export function ProgressBar({ currentSlide, totalSlides = 10 }: ProgressBarProps) {
+export function ProgressBar({ currentSlide, totalSlides = 8 }: ProgressBarProps) {
   const pct = Math.min(100, Math.max(0, (currentSlide / totalSlides) * 100));
 
   return (

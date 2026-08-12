@@ -34,7 +34,7 @@ function launchConfetti() {
   });
 }
 
-export function Slide10Finalizacion() {
+export function Slide8Finalizacion() {
   const store = useSurveyStore();
   const [state, setState] = useState<SubmitState>('idle');
   const [turnstileToken, setTurnstileToken] = useState<string>('');
@@ -56,8 +56,6 @@ export function Slide10Finalizacion() {
       problema_principal: store.problemaPrincipal,
       prioridades_administracion: store.prioridadesAdministracion,
       canal_comunicacion: store.canalComunicacion,
-      alcaldia_espontanea: store.alcaldiaEspontanea,
-      prefectura_espontanea: store.prefecturaEspontanea,
       alcaldia_asistida: store.alcaldiaAsistida,
       prefectura_asistida: store.prefecturaAsistida,
       duration_seconds: durationSeconds,

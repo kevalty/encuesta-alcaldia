@@ -11,15 +11,13 @@ import { Slide2EstadoAnimo } from '@/components/survey/Slide2EstadoAnimo';
 import { Slide3ProblemaPrincipal } from '@/components/survey/Slide3ProblemaPrincipal';
 import { Slide4Prioridades } from '@/components/survey/Slide4Prioridades';
 import { Slide5CanalComunicacion } from '@/components/survey/Slide5CanalComunicacion';
-import { Slide6AlcaldiaEspontanea } from '@/components/survey/Slide6AlcaldiaEspontanea';
-import { Slide7PrefecturaEspontanea } from '@/components/survey/Slide7PrefecturaEspontanea';
-import { Slide8AlcaldiaAsistida } from '@/components/survey/Slide8AlcaldiaAsistida';
-import { Slide9PrefecturaAsistida } from '@/components/survey/Slide9PrefecturaAsistida';
-import { Slide10Finalizacion } from '@/components/survey/Slide10Finalizacion';
+import { Slide6AlcaldiaAsistida } from '@/components/survey/Slide6AlcaldiaAsistida';
+import { Slide7PrefecturaAsistida } from '@/components/survey/Slide7PrefecturaAsistida';
+import { Slide8Finalizacion } from '@/components/survey/Slide8Finalizacion';
 import { RiobambaTower } from '@/components/ui/RiobambaTower';
 import type { Candidate } from '@/types';
 
-const TOTAL_SLIDES = 10;
+const TOTAL_SLIDES = 8;
 
 interface EncuestaFlowProps {
   alcaldiaCandidatos: Candidate[];
@@ -65,11 +63,9 @@ export function EncuestaFlow({ alcaldiaCandidatos, prefecturaCandidatos }: Encue
         {currentSlide === 3 && <Slide3ProblemaPrincipal />}
         {currentSlide === 4 && <Slide4Prioridades />}
         {currentSlide === 5 && <Slide5CanalComunicacion />}
-        {currentSlide === 6 && <Slide6AlcaldiaEspontanea />}
-        {currentSlide === 7 && <Slide7PrefecturaEspontanea />}
-        {currentSlide === 8 && <Slide8AlcaldiaAsistida candidates={alcaldiaCandidatos} />}
-        {currentSlide === 9 && <Slide9PrefecturaAsistida candidates={prefecturaCandidatos} />}
-        {currentSlide === 10 && <Slide10Finalizacion />}
+        {currentSlide === 6 && <Slide6AlcaldiaAsistida candidates={alcaldiaCandidatos} />}
+        {currentSlide === 7 && <Slide7PrefecturaAsistida candidates={prefecturaCandidatos} />}
+        {currentSlide === 8 && <Slide8Finalizacion />}
       </SlideWrapper>
       {currentSlide < TOTAL_SLIDES && (
         <NavigationButtons

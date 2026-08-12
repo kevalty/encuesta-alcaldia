@@ -10,10 +10,10 @@ import type {
 } from '@/types';
 import { NINGUNO_DE_LOS_ANTERIORES } from '@/lib/constants';
 
-const TOTAL_SLIDES = 10;
+const TOTAL_SLIDES = 8;
 
 interface SurveyState {
-  currentSlide: number; // 1..10
+  currentSlide: number; // 1..8
   direction: number;
   startedAt: number | null;
 
@@ -25,8 +25,6 @@ interface SurveyState {
   problemaPrincipal: ProblemaPrincipal | null;
   prioridadesAdministracion: string[];
   canalComunicacion: CanalComunicacion | null;
-  alcaldiaEspontanea: string;
-  prefecturaEspontanea: string;
   alcaldiaAsistida: string[];
   prefecturaAsistida: string[];
 
@@ -38,8 +36,6 @@ interface SurveyState {
   setProblemaPrincipal: (v: ProblemaPrincipal) => void;
   togglePrioridadAdministracion: (v: string) => void;
   setCanalComunicacion: (v: CanalComunicacion) => void;
-  setAlcaldiaEspontanea: (v: string) => void;
-  setPrefecturaEspontanea: (v: string) => void;
   toggleAlcaldiaAsistida: (name: string) => void;
   togglePrefecturaAsistida: (name: string) => void;
   startTimer: () => void;
@@ -60,8 +56,6 @@ const initialState = {
   problemaPrincipal: null,
   prioridadesAdministracion: [] as string[],
   canalComunicacion: null,
-  alcaldiaEspontanea: '',
-  prefecturaEspontanea: '',
   alcaldiaAsistida: [] as string[],
   prefecturaAsistida: [] as string[],
 };
@@ -84,8 +78,6 @@ export const useSurveyStore = create<SurveyState>((set, get) => ({
     });
   },
   setCanalComunicacion: (v) => set({ canalComunicacion: v }),
-  setAlcaldiaEspontanea: (v) => set({ alcaldiaEspontanea: v }),
-  setPrefecturaEspontanea: (v) => set({ prefecturaEspontanea: v }),
 
   toggleAlcaldiaAsistida: (name) => {
     const current = get().alcaldiaAsistida;

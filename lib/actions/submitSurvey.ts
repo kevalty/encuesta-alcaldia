@@ -38,8 +38,6 @@ export async function submitSurvey(input: FullSubmitInput): Promise<SubmitResult
     problema_principal: parsed.data.problema_principal,
     prioridades_administracion: parsed.data.prioridades_administracion,
     canal_comunicacion: parsed.data.canal_comunicacion,
-    alcaldia_espontanea: parsed.data.alcaldia_espontanea || null,
-    prefectura_espontanea: parsed.data.prefectura_espontanea || null,
     alcaldia_asistida: parsed.data.alcaldia_asistida,
     prefectura_asistida: parsed.data.prefectura_asistida,
     fingerprint: ipHash,

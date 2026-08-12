@@ -43,8 +43,6 @@ export interface SurveyPayload {
   problema_principal: ProblemaPrincipal;
   prioridades_administracion: string[];
   canal_comunicacion: CanalComunicacion;
-  alcaldia_espontanea: string;
-  prefectura_espontanea: string;
   alcaldia_asistida: string[];
   prefectura_asistida: string[];
   duration_seconds: number;

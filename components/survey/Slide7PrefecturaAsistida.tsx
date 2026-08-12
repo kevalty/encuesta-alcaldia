@@ -5,17 +5,17 @@ import { CheckboxCard } from '@/components/ui/CheckboxCard';
 import { NINGUNO_DE_LOS_ANTERIORES } from '@/lib/constants';
 import type { Candidate } from '@/types';
 
-interface Slide8Props {
+interface Slide7Props {
   candidates: Candidate[];
 }
 
-export function Slide8AlcaldiaAsistida({ candidates }: Slide8Props) {
-  const { alcaldiaAsistida, toggleAlcaldiaAsistida } = useSurveyStore();
+export function Slide7PrefecturaAsistida({ candidates }: Slide7Props) {
+  const { prefecturaAsistida, togglePrefecturaAsistida } = useSurveyStore();
 
   return (
     <div className="max-w-lg mx-auto w-full space-y-6">
       <h1 className="font-display text-2xl md:text-4xl font-medium text-ink text-balance">
-        De la siguiente lista, ¿a quiénes conoce como candidatos a la Alcaldía de Riobamba?
+        De la siguiente lista, ¿a quiénes conoce como candidatos a la Prefectura de Chimborazo?
       </h1>
 
       <div className="space-y-2">
@@ -23,14 +23,14 @@ export function Slide8AlcaldiaAsistida({ candidates }: Slide8Props) {
           <CheckboxCard
             key={c.id}
             label={c.name}
-            checked={alcaldiaAsistida.includes(c.name)}
-            onToggle={() => toggleAlcaldiaAsistida(c.name)}
+            checked={prefecturaAsistida.includes(c.name)}
+            onToggle={() => togglePrefecturaAsistida(c.name)}
           />
         ))}
         <CheckboxCard
           label={NINGUNO_DE_LOS_ANTERIORES}
-          checked={alcaldiaAsistida.includes(NINGUNO_DE_LOS_ANTERIORES)}
-          onToggle={() => toggleAlcaldiaAsistida(NINGUNO_DE_LOS_ANTERIORES)}
+          checked={prefecturaAsistida.includes(NINGUNO_DE_LOS_ANTERIORES)}
+          onToggle={() => togglePrefecturaAsistida(NINGUNO_DE_LOS_ANTERIORES)}
         />
       </div>
     </div>
