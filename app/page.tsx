@@ -39,6 +39,10 @@ export default function Home() {
           <ArrowRight size={18} />
         </Link>
       </div>
+
+      <p className="absolute bottom-3 inset-x-0 z-10 text-center font-body text-xs text-neutral/60">
+        Powered by KevSolu
+      </p>
     </main>
   );
 }
