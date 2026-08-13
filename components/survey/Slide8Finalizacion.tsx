@@ -3,7 +3,7 @@
 import { useState, useCallback } from 'react';
 import { Turnstile } from '@marsidev/react-turnstile';
 import { toast } from 'sonner';
-import { PartyPopper, MessageCircle } from 'lucide-react';
+import { PartyPopper } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { useSurveyStore } from '@/lib/store/surveyStore';
 import { submitSurvey } from '@/lib/actions/submitSurvey';
@@ -80,10 +80,6 @@ export function Slide8Finalizacion() {
     }
   }, [turnstileToken, state, store]);
 
-  const whatsappText = encodeURIComponent(
-    'Acabo de participar en la Encuesta Ciudadana 2027 de Riobamba y Chimborazo. ¡Participa tú también!'
-  );
-
   if (state === 'success') {
     return (
       <div className="max-w-lg mx-auto w-full space-y-6 text-center">
@@ -94,15 +90,6 @@ export function Slide8Finalizacion() {
         <p className="font-body text-neutral">
           Tu respuesta fue registrada. Esta es una encuesta ciudadana independiente, no oficial ni vinculante.
         </p>
-        <a
-          href={`https://wa.me/?text=${whatsappText}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 min-h-[44px] px-6 py-3 rounded-full bg-andes text-bg font-body font-medium hover:bg-andes/90 transition-colors"
-        >
-          <MessageCircle size={18} />
-          Compartir por WhatsApp
-        </a>
       </div>
     );
   }
