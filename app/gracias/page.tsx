@@ -20,6 +20,11 @@ export default function GraciasPage({
         <h1 className="font-display text-2xl md:text-4xl font-medium text-ink text-balance">
           {yaVoto ? 'Ya registramos tu participación, ¡gracias!' : '¡Gracias por participar!'}
         </h1>
+        {yaVoto && (
+          <p className="font-body text-sm text-paja">
+            Solo se puede enviar la encuesta una vez por dispositivo.
+          </p>
+        )}
         <p className="font-body text-neutral">
           Esta es una encuesta ciudadana independiente sobre la Alcaldía de Riobamba y la
           Prefectura de Chimborazo. No es un sistema de votación ni un instrumento oficial del CNE.

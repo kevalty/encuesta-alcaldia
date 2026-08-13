@@ -118,12 +118,14 @@ export function Slide8Finalizacion() {
 
       {!TESTING_MODE && (
         <div className="flex justify-center">
-          <Turnstile
-            siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? ''}
-            options={{ theme: 'light', size: 'normal' }}
-            onSuccess={setTurnstileToken}
-            onExpire={() => setTurnstileToken('')}
-          />
+          <div className="w-full max-w-xs rounded-xl border border-neutral/20 bg-ink/[0.02] p-3">
+            <Turnstile
+              siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? ''}
+              options={{ theme: 'light', size: 'flexible' }}
+              onSuccess={setTurnstileToken}
+              onExpire={() => setTurnstileToken('')}
+            />
+          </div>
         </div>
       )}
 
