@@ -38,7 +38,7 @@ export const slide4Schema = z.object({
 
 export const slide5Schema = z.object({
   canal_comunicacion: z.enum([
-    'Facebook/Instagram', 'WhatsApp', 'Radio', 'TikTok',
+    'Redes Sociales', 'WhatsApp', 'Radio / Televisión', 'TikTok',
     'Medios digitales', 'Televisión local', 'Reuniones', 'Familiares/amigos',
   ]),
 });

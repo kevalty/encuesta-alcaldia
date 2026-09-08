@@ -23,7 +23,7 @@ export type PrioridadAdministracion =
   | 'Mejorar parques y espacios públicos' | 'Otro';
 
 export type CanalComunicacion =
-  | 'Facebook/Instagram' | 'WhatsApp' | 'Radio' | 'TikTok'
+  | 'Redes Sociales' | 'WhatsApp' | 'Radio / Televisión' | 'TikTok'
   | 'Medios digitales' | 'Televisión local' | 'Reuniones' | 'Familiares/amigos';
 
 export interface Candidate {

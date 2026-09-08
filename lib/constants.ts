@@ -41,7 +41,7 @@ export const PRIORIDADES_ADMINISTRACION: PrioridadAdministracion[] = [
 ];
 
 export const CANALES_COMUNICACION: CanalComunicacion[] = [
-  'Facebook/Instagram', 'WhatsApp', 'Radio', 'TikTok',
+  'Redes Sociales', 'WhatsApp', 'Radio / Televisión', 'TikTok',
   'Medios digitales', 'Televisión local', 'Reuniones', 'Familiares/amigos',
 ];
 
